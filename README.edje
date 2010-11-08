@@ -1,0 +1,50 @@
+------------------------------------------------
+EDJE Specfication
+------------------------------------------------
+
+Application: edje2yuv
+Author: Hanspeter Portner [ ventosus@airpost.net ]
+Last Update: 08/11/10
+Desciption: Edje to yuv4mpeg-stream exporter
+
+Signals accepted by application:
+----------------------------
+
+Signal: stop
+Source: *
+Desc: Emit this signal after your animations are done
+      to finalize the program execution.
+
+Signals sent by application:
+-------------------------------
+
+Signal: start
+Source: *
+Desc: Signal is emitted when the program is ready and
+      and the animations may start.
+
+Text parts set by application:
+------------------------------
+
+	None.
+
+Swallowed areas used by application:
+------------------------------------
+
+	None.
+
+Data fields used by application:
+--------------------------------
+
+	None.
+
+------------------------------------------------
+Features and Notes
+------------------------------------------------
+
+	None.
+
+------------------------------------------------
+Changelog:
+------------------------------------------------
+08/11/10: Initial creation.

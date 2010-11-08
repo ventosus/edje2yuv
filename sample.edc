@@ -1,0 +1,67 @@
+collections {
+  group {
+    name: "main";
+    parts {
+      part {
+	name: "background";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  color: 255 255 255 255;
+	}
+      }
+      part {
+	name: "box1";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.1 0.1;
+	  rel2.relative: 0.1 0.9;
+	  color: 255 0 0 128;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.1 0.1;
+	  rel2.relative: 0.9 0.9;
+	  color: 0 255 0 128;
+	}
+      }
+      part {
+	name: "box2";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.2 0.2;
+	  rel2.relative: 0.2 0.2;
+	  color: 0 0 255 128;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.2 0.2;
+	  rel2.relative: 0.8 0.8;
+	  color: 0 255 255 128;
+	}
+      }
+    }
+    programs {
+      program {
+	signal: "start";
+	after: "animation";
+      }
+      program {
+	name: "animation";
+	action: STATE_SET "default" 1.0;
+	transition: SINUSOIDAL 2.0;
+	target: "box1";
+	target: "box2";
+	after: "stop";
+      }
+      program {
+	name: "stop";
+	action: SIGNAL_EMIT "stop" "";
+      }
+    }
+  }
+}
