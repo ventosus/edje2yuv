@@ -13,7 +13,7 @@ edje2yuv:	edje2yuv.c
 	gcc -g -o $@ $< $(OPTS)
 
 sample.edj:	sample.edc
-	edje_cc $< $@
+	edje_cc -id cc $< $@
 
 sample.mkv:	edje2yuv sample.edj
 	./edje2yuv -i sample.edj -w 800 -h 200 -f 25 | ffmpeg -y -f yuv4mpegpipe -i - -b 5000000 sample.mkv

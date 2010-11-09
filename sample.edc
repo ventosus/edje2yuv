@@ -1,6 +1,24 @@
+/*
+ * Copyright (c) 2010 Hanspeter Portner <ventosus@airpost.net>
+ * 
+ * This piece of art is released under a
+ * Creative Commons Attribution Non-Commercial Share-Alike License 3.0
+ */
+
+#define TT 1.0
+
+images {
+  image: "cc.large.png" RAW;
+  image: "by.large.png" RAW;
+  image: "nc.large.png" RAW;
+  image: "sa.large.png" RAW;
+}
+
 collections {
   group {
     name: "main";
+    min: 800 200;
+    max: 800 200;
     parts {
       part {
 	name: "background";
@@ -10,58 +28,336 @@ collections {
 	  color: 255 255 255 255;
 	}
       }
+
       part {
-	name: "box1";
+	name: "cc.clip";
 	type: RECT;
 	description {
 	  state: "default" 0.0;
-	  rel1.relative: 0.1 0.1;
-	  rel2.relative: 0.1 0.9;
-	  color: 255 0 0 128;
+	  rel1.relative: 0.125 0.5;
+	  rel2.relative: 0.125 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
 	}
 	description {
 	  state: "default" 1.0;
 	  inherit: "default" 0.0;
-	  rel1.relative: 0.1 0.1;
-	  rel2.relative: 0.9 0.9;
-	  color: 0 255 0 128;
+	  rel1.relative: 0.0 0.0;
+	  rel2.relative: 0.25 1.0;
 	}
       }
       part {
-	name: "box2";
+	name: "cc.main";
+	type: IMAGE;
+	clip_to: "cc.clip";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "cc.clip";
+	  rel2.to: "cc.clip";
+	  image.normal: "cc.large.png";
+	}
+      }
+      part {
+	name: "cc.clip2";
 	type: RECT;
 	description {
 	  state: "default" 0.0;
-	  rel1.relative: 0.2 0.2;
-	  rel2.relative: 0.2 0.2;
-	  color: 0 0 255 128;
+	  rel1.relative: 0.125 0.5;
+	  rel2.relative: 0.125 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
 	}
 	description {
 	  state: "default" 1.0;
 	  inherit: "default" 0.0;
-	  rel1.relative: 0.2 0.2;
-	  rel2.relative: 0.8 0.8;
-	  color: 0 255 255 128;
+	  rel1.relative: 0.0 0.0;
+	  rel2.relative: 0.25 1.0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  rel1.relative: -0.25 -0.5;
+	  rel2.relative: 0.50 1.5;
+	  color: 255 255 255 0;
+	}
+      }
+      part {
+	name: "cc.main2";
+	type: IMAGE;
+	clip_to: "cc.clip2";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "cc.clip2";
+	  rel2.to: "cc.clip2";
+	  image.normal: "cc.large.png";
+	}
+      }
+
+      part {
+	name: "by.clip";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.375 0.5;
+	  rel2.relative: 0.375 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.25 0.0;
+	  rel2.relative: 0.50 1.0;
+	}
+      }
+      part {
+	name: "by.main";
+	type: IMAGE;
+	clip_to: "by.clip";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "by.clip";
+	  rel2.to: "by.clip";
+	  image.normal: "by.large.png";
+	}
+      }
+      part {
+	name: "by.clip2";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.375 0.5;
+	  rel2.relative: 0.375 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.25 0.0;
+	  rel2.relative: 0.50 1.0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.00 -0.5;
+	  rel2.relative: 0.75 1.5;
+	  color: 255 255 255 0;
+	}
+      }
+      part {
+	name: "by.main2";
+	type: IMAGE;
+	clip_to: "by.clip2";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "by.clip2";
+	  rel2.to: "by.clip2";
+	  image.normal: "by.large.png";
+	}
+      }
+
+      part {
+	name: "nc.clip";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.625 0.5;
+	  rel2.relative: 0.625 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.50 0.0;
+	  rel2.relative: 0.75 1.0;
+	}
+      }
+      part {
+	name: "nc.main";
+	type: IMAGE;
+	clip_to: "nc.clip";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "nc.clip";
+	  rel2.to: "nc.clip";
+	  image.normal: "nc.large.png";
+	}
+      }
+      part {
+	name: "nc.clip2";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.625 0.5;
+	  rel2.relative: 0.625 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.50 0.0;
+	  rel2.relative: 0.75 1.0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.25 -0.5;
+	  rel2.relative: 1.00 1.5;
+	  color: 255 255 255 0;
+	}
+      }
+      part {
+	name: "nc.main2";
+	type: IMAGE;
+	clip_to: "nc.clip2";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "nc.clip2";
+	  rel2.to: "nc.clip2";
+	  image.normal: "nc.large.png";
+	}
+      }
+
+      part {
+	name: "sa.clip";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.875 0.5;
+	  rel2.relative: 0.875 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.75 0.0;
+	  rel2.relative: 1.00 1.0;
+	}
+      }
+      part {
+	name: "sa.main";
+	type: IMAGE;
+	clip_to: "sa.clip";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "sa.clip";
+	  rel2.to: "sa.clip";
+	  image.normal: "sa.large.png";
+	}
+      }
+      part {
+	name: "sa.clip2";
+	type: RECT;
+	description {
+	  state: "default" 0.0;
+	  rel1.relative: 0.875 0.5;
+	  rel2.relative: 0.875 0.5;
+	  aspect: 1 1;
+	  aspect_preference: BOTH;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.75 0.0;
+	  rel2.relative: 1.00 1.0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  rel1.relative: 0.50 -0.5;
+	  rel2.relative: 1.25 1.5;
+	  color: 255 255 255 0;
+	}
+      }
+      part {
+	name: "sa.main2";
+	type: IMAGE;
+	clip_to: "sa.clip2";
+	description {
+	  state: "default" 0.0;
+	  rel1.to: "sa.clip2";
+	  rel2.to: "sa.clip2";
+	  image.normal: "sa.large.png";
 	}
       }
     }
+
     programs {
       program {
 	signal: "start";
-	after: "animation";
-      }
-      program {
-	name: "animation";
-	action: STATE_SET "default" 1.0;
-	transition: SINUSOIDAL 2.0;
-	target: "box1";
-	target: "box2";
-	after: "stop";
+	after: "cc.program";
       }
       program {
 	name: "stop";
 	action: SIGNAL_EMIT "stop" "";
       }
+
+      program {
+	name: "cc.program";
+	action: STATE_SET "default" 1.0;
+	transition: LINEAR TT;
+	target: "cc.clip";
+	target: "cc.clip2";
+	after: "cc.program2";
+	after: "by.program";
+      }
+      program {
+	name: "cc.program2";
+	action: STATE_SET "default" 0.5;
+	transition: LINEAR TT;
+	target: "cc.clip2";
+      }
+
+      program {
+	name: "by.program";
+	action: STATE_SET "default" 1.0;
+	transition: LINEAR TT;
+	target: "by.clip";
+	target: "by.clip2";
+	after: "by.program2";
+	after: "nc.program";
+      }
+      program {
+	name: "by.program2";
+	action: STATE_SET "default" 0.5;
+	transition: LINEAR TT;
+	target: "by.clip2";
+      }
+
+      program {
+	name: "nc.program";
+	action: STATE_SET "default" 1.0;
+	transition: LINEAR TT;
+	target: "nc.clip";
+	target: "nc.clip2";
+	after: "nc.program2";
+	after: "sa.program";
+      }
+      program {
+	name: "nc.program2";
+	action: STATE_SET "default" 0.5;
+	transition: LINEAR TT;
+	target: "nc.clip2";
+      }
+
+      program {
+	name: "sa.program";
+	action: STATE_SET "default" 1.0;
+	transition: LINEAR TT;
+	target: "sa.clip";
+	target: "sa.clip2";
+	after: "sa.program2";
+      }
+      program {
+	name: "sa.program2";
+	action: STATE_SET "default" 0.5;
+	transition: LINEAR TT;
+	target: "sa.clip2";
+	after: "stop";
+      }
     }
-  }
 }

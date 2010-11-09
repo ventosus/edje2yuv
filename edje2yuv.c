@@ -4,7 +4,7 @@
  *  further integration into films or presentations.
  *
  *
- *  Copyright (C) 2010 Hanspeter Portner <ventosus@airpost.net>
+ *  Copyright (c) 2010 Hanspeter Portner <ventosus@airpost.net>
  *
  *
  *  This program is free software; you can redistribute it and/or
