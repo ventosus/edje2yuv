@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2010 Hanspeter Portner <ventosus@airpost.net>
+ * Copyright (c) 2010-2011 Hanspeter Portner <ventosus@airpost.net>
  * 
  * This piece of art is released under a
  * Creative Commons Attribution Non-Commercial Share-Alike License 3.0
  */
 
-#define TT 1.0
+#define TT 1
 
 images {
   image: "cc.large.png" RAW;
@@ -78,7 +78,6 @@ collections {
 	  inherit: "default" 0.0;
 	  rel1.relative: -0.25 -0.5;
 	  rel2.relative: 0.50 1.5;
-	  color: 255 255 255 0;
 	}
       }
       part {
@@ -90,6 +89,20 @@ collections {
 	  rel1.to: "cc.clip2";
 	  rel2.to: "cc.clip2";
 	  image.normal: "cc.large.png";
+	  map.on: 1;
+	  map.smooth: 1;
+	  map.rotation.z: -180;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 180;
+	  color: 255 255 255 0;
 	}
       }
 
@@ -142,7 +155,6 @@ collections {
 	  inherit: "default" 0.0;
 	  rel1.relative: 0.00 -0.5;
 	  rel2.relative: 0.75 1.5;
-	  color: 255 255 255 0;
 	}
       }
       part {
@@ -154,6 +166,20 @@ collections {
 	  rel1.to: "by.clip2";
 	  rel2.to: "by.clip2";
 	  image.normal: "by.large.png";
+	  map.on: 1;
+	  map.smooth: 1;
+	  map.rotation.z: -180;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 180;
+	  color: 255 255 255 0;
 	}
       }
 
@@ -206,7 +232,6 @@ collections {
 	  inherit: "default" 0.0;
 	  rel1.relative: 0.25 -0.5;
 	  rel2.relative: 1.00 1.5;
-	  color: 255 255 255 0;
 	}
       }
       part {
@@ -218,6 +243,20 @@ collections {
 	  rel1.to: "nc.clip2";
 	  rel2.to: "nc.clip2";
 	  image.normal: "nc.large.png";
+	  map.on: 1;
+	  map.smooth: 1;
+	  map.rotation.z: -180;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 180;
+	  color: 255 255 255 0;
 	}
       }
 
@@ -270,7 +309,6 @@ collections {
 	  inherit: "default" 0.0;
 	  rel1.relative: 0.50 -0.5;
 	  rel2.relative: 1.25 1.5;
-	  color: 255 255 255 0;
 	}
       }
       part {
@@ -282,6 +320,20 @@ collections {
 	  rel1.to: "sa.clip2";
 	  rel2.to: "sa.clip2";
 	  image.normal: "sa.large.png";
+	  map.on: 1;
+	  map.smooth: 1;
+	  map.rotation.z: -180;
+	}
+	description {
+	  state: "default" 1.0;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 0;
+	}
+	description {
+	  state: "default" 0.5;
+	  inherit: "default" 0.0;
+	  map.rotation.z: 180;
+	  color: 255 255 255 0;
 	}
       }
     }
@@ -302,6 +354,7 @@ collections {
 	transition: LINEAR TT;
 	target: "cc.clip";
 	target: "cc.clip2";
+	target: "cc.main2";
 	after: "cc.program2";
 	after: "by.program";
       }
@@ -310,6 +363,7 @@ collections {
 	action: STATE_SET "default" 0.5;
 	transition: LINEAR TT;
 	target: "cc.clip2";
+	target: "cc.main2";
       }
 
       program {
@@ -318,6 +372,7 @@ collections {
 	transition: LINEAR TT;
 	target: "by.clip";
 	target: "by.clip2";
+	target: "by.main2";
 	after: "by.program2";
 	after: "nc.program";
       }
@@ -326,6 +381,7 @@ collections {
 	action: STATE_SET "default" 0.5;
 	transition: LINEAR TT;
 	target: "by.clip2";
+	target: "by.main2";
       }
 
       program {
@@ -334,6 +390,7 @@ collections {
 	transition: LINEAR TT;
 	target: "nc.clip";
 	target: "nc.clip2";
+	target: "nc.main2";
 	after: "nc.program2";
 	after: "sa.program";
       }
@@ -342,6 +399,7 @@ collections {
 	action: STATE_SET "default" 0.5;
 	transition: LINEAR TT;
 	target: "nc.clip2";
+	target: "nc.main2";
       }
 
       program {
@@ -350,6 +408,7 @@ collections {
 	transition: LINEAR TT;
 	target: "sa.clip";
 	target: "sa.clip2";
+	target: "sa.main2";
 	after: "sa.program2";
       }
       program {
@@ -357,6 +416,7 @@ collections {
 	action: STATE_SET "default" 0.5;
 	transition: LINEAR TT;
 	target: "sa.clip2";
+	target: "sa.main2";
 	after: "stop";
       }
     }
