@@ -1,0 +1,6 @@
+2011-07-27	Hanspeter Portner	(ventosus)
+
+  * redesign of directory tree
+  * update of sample file and test routines
+  * addition of raw ARGB output
+  * got rid of scale parameter, edje2yuv now is able to pause the ecore/edje animation loops while writing the frames to pipe/disk

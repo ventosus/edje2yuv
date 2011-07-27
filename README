@@ -1,0 +1,5 @@
+edje2yuv
+
+A program to export Edje programs (layout/animation library
+of the Enlightenment foundation libraries) to a yuv4mpeg2 or ARGB stream for
+further processing with e.g. FFmpeg and integration into films or presentations.
