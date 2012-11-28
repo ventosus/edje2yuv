@@ -46,9 +46,7 @@ uint8_t *planar420 [3];
 void
 init ()
 {
-   ecore_init ();
    ecore_evas_init ();
-   evas_init ();
    edje_init ();
    y4m_accept_extensions (1);
 }
@@ -56,10 +54,8 @@ init ()
 void
 shutdown ()
 {
-   edje_shutdown ();
-   evas_shutdown ();
-   ecore_evas_shutdown ();
-   ecore_shutdown ();
+   edje_init ();
+   ecore_evas_init ();
 }
 
 void
@@ -168,6 +164,7 @@ main (int argc, char **argv)
      ee = ecore_evas_buffer_new (width, height);
    else
      ee = ecore_evas_software_x11_new ("", 0, 0, 0, width, height);
+   ecore_evas_title_set (ee, "Edje2YUV");
    ecore_evas_show (ee);
    evas = ecore_evas_get (ee);
    edj = edje_object_add (evas);
@@ -290,12 +287,11 @@ main (int argc, char **argv)
        y4m_fini_stream_info (&si);
        y4m_fini_frame_info (&fi);
      }
+
+     ecore_timer_del (ea);
    }
   
-   if (ea)
-     ecore_timer_del (ea);
    evas_object_del (edj);
-   evas_free (evas);
    ecore_evas_free (ee);
    
    shutdown ();
