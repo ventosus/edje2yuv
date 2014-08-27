@@ -72,7 +72,6 @@ abort_ (const char *s, ...)
 Eina_Bool
 dump (void *udata)
 {
-  //edje_object_calc_force (edj);
   edje_object_play_set (edj, EINA_FALSE);
   ecore_timer_freeze (ea);
 
@@ -176,7 +175,7 @@ main (int argc, char **argv)
    edje_object_signal_emit (edj, "start", "");
    edje_object_signal_callback_add (edj, "stop", "*", stop, NULL);
    edje_frametime_set (1.0 / (double) fps);
-  
+
    if (!test)
    {
      if (!strcmp (out, "-"))
