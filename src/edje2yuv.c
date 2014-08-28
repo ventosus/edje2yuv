@@ -178,6 +178,8 @@ main (int argc, char **argv)
 
    if (!test)
    {
+		 edje_frametime_set (0.1 / (double) fps);
+
      if (!strcmp (out, "-"))
        stream = stdout;
      else
