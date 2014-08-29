@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
 
 #include <Ecore.h>
 #include <Ecore_Evas.h>
@@ -16,7 +17,9 @@
 Ecore_Evas *ee = NULL;
 Evas *evas = NULL;
 Evas_Object *edj = NULL;
-Ecore_Timer *ea = NULL;
+Ecore_Animator *ea = NULL;
+volatile Eina_Bool done = EINA_FALSE;
+int counter = 0;
 
 // command line arguments
 int test = 0;
@@ -70,29 +73,38 @@ abort_ (const char *s, ...)
 }
 
 Eina_Bool
-dump (void *udata)
+_dump (void *udata)
 {
-  edje_object_play_set (edj, EINA_FALSE);
-  ecore_timer_freeze (ea);
+	if(++counter == 10) // 10x over sampling
+	{
+		counter = 0;
+		
+		FILE *f = udata;
+		int stream_nr = fileno (f);
+		const uint8_t *buf = ecore_evas_buffer_pixels_get (ee);
+		
+		if (raw)
+			fwrite (buf, sizeof (uint8_t), width*height*4, f);
+		else
+		{
+			sws_scale (dstContext, &buf, srcStride, 0, height, planar420, dstStride);
+			y4m_write_frame (stream_nr, &si, &fi, planar420);
+		}
+		
+		return ECORE_CALLBACK_RENEW;
+	}
+}
 
-  ecore_main_loop_iterate ();
+void
+_begin_tick(void *udata)
+{
+	ecore_animator_custom_tick();
+}
 
-  FILE *f = udata;
-  int stream_nr = fileno (f);
-  const uint8_t *buf = ecore_evas_buffer_pixels_get (ee);
-
-  if (raw)
-    fwrite (buf, sizeof (uint8_t), width*height*4, f);
-  else
-  {
-    sws_scale (dstContext, &buf, srcStride, 0, height, planar420, dstStride);
-    y4m_write_frame (stream_nr, &si, &fi, planar420);
-  }
-
-  ecore_timer_thaw (ea);
-  edje_object_play_set (edj, EINA_TRUE);
-
-  return EINA_TRUE;
+void
+_end_tick(void *udata)
+{
+	// do nothing
 }
 
 void
@@ -100,6 +112,7 @@ stop (void *udata, Evas_Object * edj, const char *emission,
       const char *source)
 {
    ecore_main_loop_quit ();
+	 done = EINA_TRUE;
 }
 
 int
@@ -178,8 +191,6 @@ main (int argc, char **argv)
 
    if (!test)
    {
-		 edje_frametime_set (0.1 / (double) fps);
-
      if (!strcmp (out, "-"))
        stream = stdout;
      else
@@ -187,7 +198,6 @@ main (int argc, char **argv)
      int stream_nr = fileno (stream);
 
      // efl
-     ea = ecore_timer_add (1.0 / (double) fps, dump, stream);
 
      if (!raw)
      {
@@ -272,12 +282,37 @@ main (int argc, char **argv)
        planar420[1] = data + width*height;
        planar420[2] = data + width*height*2;
      }
+
+		 ea = ecore_animator_add(_dump, stream);
+
+		 ecore_animator_custom_source_tick_begin_callback_set(_begin_tick, stream);
+		 ecore_animator_custom_source_tick_end_callback_set(_end_tick, stream);
+		 ecore_animator_source_set(ECORE_ANIMATOR_SOURCE_CUSTOM);
+
+		 ecore_main_loop_iterate();
+		 double lt = ecore_loop_time_get();
+
+		 int frm = 0;
+		 while(done == EINA_FALSE)
+		 {
+			 if(ecore_main_loop_animator_ticked_get() == EINA_TRUE)
+			 {
+				 lt += 0.1 / (double)fps; // 10x over sampling
+				 ecore_loop_time_set(lt);
+				 ecore_animator_custom_tick();
+			 }
+
+			 ecore_loop_time_set(lt);
+			 ecore_main_loop_iterate();
+		 }
    }
-   
-   ecore_main_loop_begin ();
+	 else
+		 ecore_main_loop_begin();
   
    if (!test)
    {
+		 ecore_animator_del(ea);
+
      if (strcmp (out, "-"))
        fclose (stream);
 
@@ -288,10 +323,8 @@ main (int argc, char **argv)
        y4m_fini_stream_info (&si);
        y4m_fini_frame_info (&fi);
      }
-
-     ecore_timer_del (ea);
    }
-  
+
    evas_object_del (edj);
    ecore_evas_free (ee);
    

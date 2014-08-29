@@ -11,7 +11,7 @@ sample.y4m:	sample.edj
 	edje2yuv -i $< -w $(WIDTH) -h $(HEIGHT) -f $(FPS) -y mono -o $@
 
 sample.mkv:	sample.edj
-	edje2yuv -i $< -w $(WIDTH) -h $(HEIGHT) -f $(FPS) -y 420mpeg2 | ffmpeg -y -f yuv4mpegpipe -i - -b 5000000 $@
+	edje2yuv -i $< -w $(WIDTH) -h $(HEIGHT) -f $(FPS) -y 420mpeg2 | ffmpeg -y -f yuv4mpegpipe -i - -vcodec png $@
 
 sample.pipe:	sample.edj
 	edje2yuv -i $< -w $(WIDTH) -h $(HEIGHT) -f $(FPS) -y 411 | ffplay -autoexit -
