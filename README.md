@@ -16,6 +16,16 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 * [mjpegtools](http://mjpeg.sourceforge.net/) (MJPEG Tools)
 * [ffmpeg](http://ffmpeg.org/) (FFMpeg)
 
+### Build Dependencies
+
+#### Debian/Ubuntu
+
+	sudo apt-get install libefl-dev libswscale-dev libmjpegtools-dev
+
+#### ArchLinux
+
+	sudo pacman -S efl ffmpeg mjpegtools
+
 ### Build / install
 
 	git clone https://github.com/ventosus/edje2yuv.git
