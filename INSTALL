@@ -1,8 +1,0 @@
-Prepare to build edje2yuv
-  >> cmake .
-
-Actually build edje2yuv
-  >> make
-
-Install edje2yuv
-  >> sudo make install

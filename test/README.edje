@@ -4,7 +4,7 @@ EDJE Specfication
 
 Application: edje2yuv
 Author: Hanspeter Portner [ ventosus@airpost.net ]
-Last Update: 08/11/10
+Last Update: 18/06/2015
 Desciption: Edje to yuv4mpeg-stream exporter
 
 Signals accepted by application:
@@ -47,4 +47,5 @@ Features and Notes
 ------------------------------------------------
 Changelog:
 ------------------------------------------------
-08/11/10: Initial creation.
+18/06/2015: Code cleanup.
+08/11/2010: Initial creation.
