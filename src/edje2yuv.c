@@ -31,6 +31,8 @@
 #include <yuv4mpeg.h>
 #include <libswscale/swscale.h>
 
+#define OVERSAMPLING 10
+
 // efl
 Ecore_Evas *ee = NULL;
 Evas *evas = NULL;
@@ -58,8 +60,8 @@ y4m_frame_info_t fi;
 
 // swscale stuff
 struct SwsContext *dstContext = NULL;
-int srcFormat = PIX_FMT_BGRA;
-int dstFormat = PIX_FMT_YUV420P;
+int srcFormat = AV_PIX_FMT_BGRA;
+int dstFormat = AV_PIX_FMT_YUV420P;
 int srcStride [] = {0, 0, 0, 0};
 int dstStride [] = {0, 0, 0, 0};
 uint8_t *planar420 [3];
@@ -93,7 +95,7 @@ abort_(const char *s, ...)
 Eina_Bool
 _dump(void *udata)
 {
-	if(++counter == 10) // 10x over sampling
+	if(++counter == OVERSAMPLING) // over sampling
 	{
 		counter = 0;
 
@@ -247,7 +249,7 @@ main(int argc, char **argv)
 			switch(chroma)
 			{
 				case Y4M_CHROMA_420JPEG:
-					dstFormat = PIX_FMT_YUVJ420P;
+					dstFormat = AV_PIX_FMT_YUVJ420P;
 					dstStride[0] = width;
 					dstStride[1] = width/2;
 					dstStride[2] = width/2;
@@ -255,36 +257,36 @@ main(int argc, char **argv)
 				case Y4M_CHROMA_420PALDV:
 					//TODO
 				case Y4M_CHROMA_420MPEG2:
-					dstFormat = PIX_FMT_YUV420P;
+					dstFormat = AV_PIX_FMT_YUV420P;
 					dstStride[0] = width;
 					dstStride[1] = width/2;
 					dstStride[2] = width/2;
 					break;
 				case Y4M_CHROMA_444:
-					dstFormat = PIX_FMT_YUV444P;
+					dstFormat = AV_PIX_FMT_YUV444P;
 					dstStride[0] = width;
 					dstStride[1] = width;
 					dstStride[2] = width;
 					break;
 				case Y4M_CHROMA_422:
-					dstFormat = PIX_FMT_YUV422P;
+					dstFormat = AV_PIX_FMT_YUV422P;
 					dstStride[0] = width;
 					dstStride[1] = width/2;
 					dstStride[2] = width/2;
 					break;
 				case Y4M_CHROMA_411:
-					dstFormat = PIX_FMT_YUV411P;
+					dstFormat = AV_PIX_FMT_YUV411P;
 					dstStride[0] = width;
 					dstStride[1] = width/4;
 					dstStride[2] = width/4;
 					break;
 				case Y4M_CHROMA_MONO:
-					dstFormat = PIX_FMT_GRAY8;
+					dstFormat = AV_PIX_FMT_GRAY8;
 					dstStride[0] = width;
 					break;
 				case Y4M_CHROMA_444ALPHA:
 					//TODO
-					dstFormat = PIX_FMT_YUV444P;
+					dstFormat = AV_PIX_FMT_YUV444P;
 					dstStride[0] = width;
 					dstStride[1] = width;
 					dstStride[2] = width;
@@ -314,12 +316,14 @@ main(int argc, char **argv)
 		ecore_main_loop_iterate();
 		double lt = ecore_loop_time_get();
 
+		const double step = 1.0 / OVERSAMPLING / fps;
+
 		int frm = 0;
 		while(done == EINA_FALSE)
 		{
 			if(ecore_main_loop_animator_ticked_get() == EINA_TRUE)
 			{
-				lt += 0.1 /(double)fps; // 10x over sampling
+				lt += step;
 				ecore_loop_time_set(lt);
 				ecore_animator_custom_tick();
 			}
