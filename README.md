@@ -14,6 +14,7 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 * [EFL](https://git.enlightenment.org/) (Enlightenment foundation Libraries)
 * [mjpegtools](http://mjpeg.sourceforge.net/) (MJPEG Tools)
+* [ffmpeg](https://ffmpeg.org/) (FFmpeg multimedia framework)
 
 ### Build Dependencies
 
