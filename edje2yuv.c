@@ -23,10 +23,13 @@
 #include <ctype.h>
 #include <time.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
 #include <Ecore.h>
 #include <Ecore_Evas.h>
 #include <Evas.h>
 #include <Edje.h>
+#pragma GCC diagnostic pop
 
 #include <yuv4mpeg.h>
 #include <libswscale/swscale.h>

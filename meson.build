@@ -1,6 +1,6 @@
 project('edje2yuv', 'c', default_options : [
 	'buildtype=release',
-	'warning_level=2',
+	'warning_level=3',
 	'werror=false',
 	'b_lto=false',
 	'c_std=gnu11'])
