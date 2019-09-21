@@ -116,20 +116,22 @@ _dump(void *udata)
 }
 
 void
-_begin_tick(void *udata)
+_begin_tick(void *udata __attribute__((unused)))
 {
 	ecore_animator_custom_tick();
 }
 
 void
-_end_tick(void *udata)
+_end_tick(void *udata __attribute__((unused)))
 {
 	// do nothing
 }
 
 void
-stop(void *udata, Evas_Object * edj, const char *emission,
-	const char *source)
+stop(void *udata __attribute__((unused)),
+	Evas_Object *edj __attribute__((unused)),
+	const char *emission __attribute__((unused)),
+	const char *source __attribute__((unused)))
 {
 	ecore_main_loop_quit();
 	done = EINA_TRUE;
