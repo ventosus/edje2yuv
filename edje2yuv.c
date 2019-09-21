@@ -237,8 +237,7 @@ main(int argc, char **argv)
 		return 1;
 	}
 
-	chroma = y4m_chroma_parse_keyword(optarg);
-	fprintf(stderr, "chroma: %s\n", y4m_chroma_description(chroma));
+	chroma = y4m_chroma_parse_keyword(chroma_str);
 	if(chroma == Y4M_UNKNOWN)
 	{
 		chroma = Y4M_CHROMA_420MPEG2;
