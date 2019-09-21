@@ -7,7 +7,7 @@ project('edje2yuv', 'c', default_options : [
 
 version = run_command('cat', 'VERSION').stdout().strip()
 
-add_project_arguments('-DLV2LINT_VERSION="'+version+'"', language : 'c')
+add_project_arguments('-DEDJE2YUV_VERSION="'+version+'"', language : 'c')
 add_project_arguments('-D_GNU_SOURCE', language : 'c')
 
 conf_data = configuration_data()
@@ -33,4 +33,4 @@ executable('edje2yuv', srcs,
 	dependencies : deps,
 	install : true)
 
-#install_man('edje2yuv.1')
+install_man('edje2yuv.1')

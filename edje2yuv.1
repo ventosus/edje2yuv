@@ -1,0 +1,66 @@
+.TH EDJE2YUV "1" "Sep 21, 2019"
+
+.SH NAME
+edje2yuv
+
+.SH SYNOPSIS
+.B edje2yuv
+\fI-i\fR INPUT [\fIOPTIONS\fR]
+
+.SH DESCRIPTION
+A program to export Edje programs (layout/animation library
+of the Enlightenment foundation libraries) to a yuv4mpeg2 or ARGB stream for
+further processing with e.g. FFmpeg and integration into films or presentations.
+\fBedje2yuv\fP checks whether given LV2 plugins are up to the specification.
+
+.SH OPTIONS
+.HP
+\fB\-v\fR
+.IP
+Print version and license information
+
+.HP
+\fB\-i\fR INPUT
+.IP
+input *.edj file
+
+.HP
+\fB\-o\fR OUTPUT
+.IP
+output file or pipe (-)
+
+.HP
+\fB\-w\fR WIDTH
+.IP
+output width (1280)
+
+.HP
+\fB\-h\fR HEIGHT
+.IP
+output height (720)
+
+.HP
+\fB\-f\fR FPS
+.IP
+frames per second (25)
+
+.HP
+\fB\-y\fR CHROMA
+.IP
+chroma 420jpeg|420mpeg2|420paldv|444|422|411|mono|444alpha (420mpeg2)
+
+.HP
+\fB\-r\fR
+.IP
+raw RGBA output
+
+.HP
+\fB\-t\fR
+.IP
+testing mode
+
+.SH LICENSE
+Artistic License 2.0.
+
+.SH AUTHOR
+Hanspeter Portner (dev@open-music-kontrollers.ch).

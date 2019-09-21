@@ -37,39 +37,38 @@
 #define OVERSAMPLING 10
 
 // efl
-Ecore_Evas *ee = NULL;
-Evas *evas = NULL;
-Evas_Object *edj = NULL;
-Ecore_Animator *ea = NULL;
-volatile Eina_Bool done = EINA_FALSE;
-int counter = 0;
+static Ecore_Evas *ee = NULL;
+static Evas *evas = NULL;
+static Evas_Object *edj = NULL;
+static Ecore_Animator *ea = NULL;
+static volatile Eina_Bool done = EINA_FALSE;
+static int counter = 0;
 
 // command line arguments
-int test = 0;
-int fps = 25;
-int scale = 1;
-char *in = NULL;
-char *out = "-";
-char PATH[256];
-int width = 0;
-int height = 0;
-int chroma = Y4M_CHROMA_420MPEG2;
-int raw = 0;
+static int test = 0;
+static int fps = 25;
+static char *in = NULL;
+static char *out = "-";
+static int width = 1280;
+static int height = 720;
+static const char *chroma_str = "420mpeg2";
+static int chroma = Y4M_UNKNOWN;
+static int raw = 0;
 
 // yuv4mpeg
-FILE *stream = NULL;
-y4m_stream_info_t si;
-y4m_frame_info_t fi;
+static FILE *stream = NULL;
+static y4m_stream_info_t si;
+static y4m_frame_info_t fi;
 
 // swscale stuff
-struct SwsContext *dstContext = NULL;
-int srcFormat = AV_PIX_FMT_BGRA;
-int dstFormat = AV_PIX_FMT_YUV420P;
-int srcStride [] = {0, 0, 0, 0};
-int dstStride [] = {0, 0, 0, 0};
-uint8_t *planar420 [3];
+static struct SwsContext *dstContext = NULL;
+static int srcFormat = AV_PIX_FMT_BGRA;
+static int dstFormat = AV_PIX_FMT_YUV420P;
+static int srcStride [] = {0, 0, 0, 0};
+static int dstStride [] = {0, 0, 0, 0};
+static uint8_t *planar420 [3];
 
-void
+static void
 init()
 {
 	ecore_evas_init();
@@ -77,25 +76,14 @@ init()
 	y4m_accept_extensions(1);
 }
 
-void
+static void
 shutdown()
 {
 	edje_init();
 	ecore_evas_init();
 }
 
-void
-abort_(const char *s, ...)
-{
-	va_list args;
-	va_start(args, s);
-	vfprintf(stderr, s, args);
-	fprintf(stderr, "\n");
-	va_end(args);
-	abort();
-}
-
-Eina_Bool
+static Eina_Bool
 _dump(void *udata)
 {
 	if(++counter == OVERSAMPLING) // over sampling
@@ -118,19 +106,19 @@ _dump(void *udata)
 	return ECORE_CALLBACK_RENEW;
 }
 
-void
+static void
 _begin_tick(void *udata __attribute__((unused)))
 {
 	ecore_animator_custom_tick();
 }
 
-void
+static void
 _end_tick(void *udata __attribute__((unused)))
 {
 	// do nothing
 }
 
-void
+static void
 stop(void *udata __attribute__((unused)),
 	Evas_Object *edj __attribute__((unused)),
 	const char *emission __attribute__((unused)),
@@ -140,42 +128,98 @@ stop(void *udata __attribute__((unused)),
 	done = EINA_TRUE;
 }
 
+static void
+_version(void)
+{
+	fprintf(stderr,
+		"--------------------------------------------------------------------\n"
+		"This is free software: you can redistribute it and/or modify\n"
+		"it under the terms of the Artistic License 2.0 as published by\n"
+		"The Perl Foundation.\n"
+		"\n"
+		"This source is distributed in the hope that it will be useful,\n"
+		"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n"
+		"Artistic License 2.0 for more details.\n"
+		"\n"
+		"You should have received a copy of the Artistic License 2.0\n"
+		"along the source as a COPYING file. If not, obtain it from\n"
+		"http://www.perlfoundation.org/artistic_license_2_0.\n\n");
+}
+
+static void
+_usage(char **argv)
+{
+	fprintf(stderr,
+		"--------------------------------------------------------------------\n"
+		"USAGE\n"
+		"   %s -i INPUT [OPTIONS]\n"
+		"\n"
+		"OPTIONS\n"
+		"   [-v]                     print version information\n"
+		"   [-i] INPUT               input *.edj file\n"
+		"   [-o] OUTPUT              output file or pipe (%s)\n"
+		"   [-w] WIDTH               output width (%u)\n"
+		"   [-h] HEIGHT              output height (%u)\n"
+		"   [-f] FPS                 frames per second (%u)\n"
+		"   [-y] CHROMA              chroma 420jpeg|420mpeg2|420paldv|444|422|411|mono|444alpha (%s)\n"
+		"   [-r]                     raw RGBA output\n"
+		"   [-t]                     testing mode\n\n"
+		, argv[0], out, width, height, fps, chroma_str);
+}
+
 int
 main(int argc, char **argv)
 {
+	fprintf(stderr,
+		"%s "EDJE2YUV_VERSION"\n"
+		"Copyright (c) 2015-2019 Hanspeter Portner (dev@open-music-kontrollers.ch)\n"
+		"Released under Artistic License 2.0 by Open Music Kontrollers\n",
+		argv[0]);
+
 	int c;
-	while((c = getopt(argc, argv, "i:o:w:h:f:y:rt")) != -1)
+	while((c = getopt(argc, argv, "vi:o:w:h:f:y:rt")) != -1)
 	{
 		switch(c)
 		{
+			case 'v':
+			{
+				_version();
+			} return 0;
 			case 'i':
+			{
 				in = optarg;
-				break;
+			}	break;
 			case 'o':
+			{
 				out = optarg;
-				break;
+			}	break;
 			case 'w':
+			{
 				width = atoi(optarg);
-				break;
+			}	break;
 			case 'h':
+			{
 				height = atoi(optarg);
-				break;
+			}	break;
 			case 'f':
+			{
 				fps = atoi(optarg);
-				break;
+			}	break;
 			case 'y':
-				chroma = y4m_chroma_parse_keyword(optarg);
-				fprintf(stderr, "chroma: %s\n", y4m_chroma_description(chroma));
-				if(chroma == Y4M_UNKNOWN)
-					chroma = Y4M_CHROMA_420MPEG2;
-				break;
+			{
+				chroma_str = optarg;
+			}	break;
 			case 't':
+			{
 				test = 1;
-				break;
+			} break;
 			case 'r':
+			{
 				raw = 1;
-				break;
+			}	break;
 			case '?':
+			{
 				if((optopt == 'i') ||(optopt == 'o') ||(optopt == 'w')
 						||(optopt == 'h') ||(optopt == 'f') ||(optopt == 'y'))
 					fprintf(stderr, "Option `-%c' requires an argument.\n", optopt);
@@ -183,18 +227,21 @@ main(int argc, char **argv)
 					fprintf(stderr, "Unknown option `-%c'.\n", optopt);
 				else
 					fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
-				return 1;
-			default:
-				abort();
+			}	return 1;
 		}
 	}
 
-	if(!in || !width || !height)
+	if(!in)
 	{
-		fprintf(stderr, "usage: %s -i INPUT -w WIDTH -h HEIGHT [-o OUTPUT] [-t] "
-			"[-f FPS] [-y 420jpeg|420mpeg2|420paldv|444|422|411|mono|444alpha] [-r]\n\n",
-			argv[0]);
-		abort();
+		_usage(argv);
+		return 1;
+	}
+
+	chroma = y4m_chroma_parse_keyword(optarg);
+	fprintf(stderr, "chroma: %s\n", y4m_chroma_description(chroma));
+	if(chroma == Y4M_UNKNOWN)
+	{
+		chroma = Y4M_CHROMA_420MPEG2;
 	}
 
 	fprintf(stderr, "width: %i\nheight: %i\nfps: %i\nraw: %i\nyuv: %s:\nin: %s\n"
