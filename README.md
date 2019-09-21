@@ -12,7 +12,7 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 ### Dependencies
 
-* [Efl](http://docs.enlightenment.org/auto/efl/) (Enlightenment Foundation Libraries)
+* [EFL](https://git.enlightenment.org/) (Enlightenment foundation Libraries)
 * [mjpegtools](http://mjpeg.sourceforge.net/) (MJPEG Tools)
 
 ### Build Dependencies
