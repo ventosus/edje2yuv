@@ -6,7 +6,7 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 ### Build status
 
-[![Build Status](https://travis-ci.org/ventosus/edje2yuv.svg?branch=master)](https://travis-ci.org/ventosus/edje2yuv)
+[![build status](https://gitlab.com/OpenMusicKontrollers/edje2yuv/badges/master/build.svg)](https://gitlab.com/OpenMusicKontrollers/edje2yuv/commits/master)
 
 ### About
 
@@ -14,7 +14,6 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 * [Efl](http://docs.enlightenment.org/auto/efl/) (Enlightenment Foundation Libraries)
 * [mjpegtools](http://mjpeg.sourceforge.net/) (MJPEG Tools)
-* [ffmpeg](http://ffmpeg.org/) (FFMpeg)
 
 ### Build Dependencies
 
@@ -30,15 +29,14 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 	git clone https://github.com/ventosus/edje2yuv.git
 	cd edje2yuv 
-	mkdir build
+	meson build
 	cd build
-	cmake ..
-	make
-	sudo make install
+	ninja -j4
+	sudo ninja install
 
 ### License
 
-Copyright (c) 2015 Hanspeter Portner (dev@open-music-kontrollers.ch)
+Copyright (c) 2015-2019 Hanspeter Portner (dev@open-music-kontrollers.ch)
 
 This is free software: you can redistribute it and/or modify
 it under the terms of the Artistic License 2.0 as published by
