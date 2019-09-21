@@ -318,7 +318,6 @@ main(int argc, char **argv)
 
 		const double step = 1.0 / OVERSAMPLING / fps;
 
-		int frm = 0;
 		while(done == EINA_FALSE)
 		{
 			if(ecore_main_loop_animator_ticked_get() == EINA_TRUE)
