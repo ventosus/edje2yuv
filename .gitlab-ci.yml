@@ -42,25 +42,25 @@ stages:
 x86_64-linux-gnu:
   before_script:
     - apt-get update
-    - apt-get install -y libeina-dev libecore-dev libevas-dev libedje-dev libmjpegtools-dev libswscale-dev
+    - apt-get install -y libefl-all-dev libmjpegtools-dev libswscale-dev
   <<: *universal_linux_definition
 
 i686-linux-gnu:
   before_script:
     - apt-get update
-    - apt-get install -y libeina-dev:i386 libecore-dev:i386 libevas-dev:i386 libedje-dev:i386 libmjpegtools-dev:i386 libswscale-dev:i386
+    - apt-get install -y libefl-all-dev:i386 libmjpegtools-dev:i386 libswscale-dev:i386
   <<: *universal_linux_definition
 
 arm-linux-gnueabihf:
   before_script:
     - apt-get update
-    - apt-get install -y libeina-dev:armhf libecore-dev:armhf libevas-dev:armhf libedje-dev:armhf libmjpegtools-dev:armhf libswscale-dev:armhf
+    - apt-get install -y libefl-all-dev:armhf libmjpegtools-dev:armhf libswscale-dev:armhf
   <<: *arm_linux_definition
 
 aarch64-linux-gnu:
   before_script:
     - apt-get update
-    - apt-get install -y libeina-dev:arm64 libecore-dev:arm64 libevas-dev:arm64 libedje-dev:arm64 libmjpegtools-dev:arm64 libswscale-dev:arm64
+    - apt-get install -y libefl-all-dev:arm64 libmjpegtools-dev:arm64 libswscale-dev:arm64
   <<: *arm_linux_definition
 
 #x86_64-w64-mingw32:

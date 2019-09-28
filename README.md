@@ -20,7 +20,7 @@ further processing with e.g. FFmpeg and integration into films or presentations.
 
 #### Debian/Ubuntu
 
-	sudo apt-get install libefl-dev libswscale-dev libmjpegtools-dev
+	sudo apt-get install libefl-all-dev libswscale-dev libmjpegtools-dev
 
 #### ArchLinux
 
