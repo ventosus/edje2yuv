@@ -30,14 +30,6 @@ stages:
   image: ventosus/arm-linux-gnueabihf
   <<: *build_definition
 
-.universal_w64_template: &universal_w64_definition
-  image: ventosus/universal-w64-mingw32
-  <<: *build_definition
-
-.universal_apple_template: &universal_apple_definition
-  image: ventosus/universal-apple-darwin
-  <<: *build_definition
-
 # building in docker
 x86_64-linux-gnu:
   before_script:
@@ -62,15 +54,6 @@ aarch64-linux-gnu:
     - apt-get update
     - apt-get install -y libefl-all-dev:arm64 libmjpegtools-dev:arm64 libswscale-dev:arm64
   <<: *arm_linux_definition
-
-#x86_64-w64-mingw32:
-#  <<: *universal_w64_definition
-
-#i686-w64-mingw32:
-#  <<: *universal_w64_definition
-
-#universal-apple-darwin:
-#  <<: *universal_apple_definition
 
 pack:
   <<: *variables_definition
